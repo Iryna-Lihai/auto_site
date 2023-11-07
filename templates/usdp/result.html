@@ -1,0 +1,45 @@
+{% extends "usdp/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container px-4 py-5 ">
+    <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5 p-4 p-md-5 mt-4 border rounded-3 bg-body-tertiary">
+      <div class = "col w-100 text-end">
+        <a href="{% url 'calculator' %}" class="btn-close" aria-label="Close"></a>
+      </div>
+      <div class="col d-flex flex-column align-items-start gap-2">
+        <h2 class="fw-bold text-body-emphasis">Інформація про обраний автомобіль</h2>
+        <h3 class="text-body">Аукціон: {{ auction_type }}</h3>
+          <h3 class="text-body">Вид палива: {{ fuel_type }}</h3>
+          <h3 class="text-body">Обʼєм двигуна: {{ engine }}</h3>
+          <h3 class="text-body">Рік випуску: {{ year }}</h3>
+          <h3 class="text-body">Ціна на аукціоні: {{ auction_price }} $</h3>
+      </div>
+
+      <div class="col d-flex flex-column gap-2">
+
+
+          <h2 class="fw-bold text-body-emphasis">Приблизна вартіть автомобіля в Україні
+           {% with total_price=auction_price|add:auction_tax|add:shipping_to_europe|add:engine_tax|add:import_duty|add:vat|add:shipping_services|add:brokerage_services %}
+              {{ total_price }} $
+              {% endwith %}
+          </h2>
+            <h3 class="fw-semibold mb-0 text-body-emphasis"></h3>
+            <h3 class="text-body">Аукціоннний збір: {{ auction_tax }} $</h3>
+            <h3 class="text-body">Доставка {{ shipping_to_europe }} $</h3>
+        <h3 class="text-body">Акциз на двигун: {{ engine_tax }} $</h3>
+          {% if fuel_type == 'Бензин' or fuel_type == 'Дизель' %}
+        <h3 class="text-body">Ввізне мито: {{ import_duty }} $</h3>
+        <h3 class="text-body">ПДВ: {{ vat }} $</h3>
+        {% endif %}
+          <h3 class="text-body">Послуги брокера {{ brokerage_services }} $</h3>
+
+          </div>
+      </div>
+    </div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "usdp/base.html" %}
+{% load static %}
+{% block content %}
+
+<hr class="featurette-divider">
+
+<div class="row featurette ">
+      <div class="col-md-7 margin=20px">
+        <h2 class="featurette-heading fw-normal lh-1">{{ our_car.title }}
+            <br><span class="text-body-secondary">{{ our_car.year }}</span></h2>
+          <p class="lead mb-4">Двигун: <b>{{ our_car.engine }}</b></p>
+          <p class="lead mb-4">Пробіг: <b>{{ our_car.mileage }}</b></p>
+          <p class="lead mb-4">Привід: <b>{{ our_car.drive }}</b></p>
+          <p class="lead mb-4">Паливо: <b>{{ our_car.fuel }}</b></p>
+          <p class="lead mb-4">Основне ушкодження: <b>{{ our_car.main_damage }}</b></p>
+          <p class="lead mb-4">Другорядне пошкодження: <b>{{ our_car.secondary_damage }}</b></p>
+          <p class="lead mb-4">Ціна на аукціоні: <b>{{ our_car.auction_price }}</b></p>
+        <p class="lead mb-4">Фінальна ціна: <b>{{ our_car.final_price }}</b></p>
+          <p class="lead">
+              <a href="{{ our_car.url }}"  style="text-decoration: none; color: inherit;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+                      <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                      <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                  </svg>
+                  Переглянути на сайті аукціону
+              </a>
+          </p>
+      </div>
+      <div class="col-md-5">
+          <div id="carouselExample" class="carousel slide">
+              <div class="carousel-inner">
+                {% for photo in our_car.image.all %}
+                <div class="carousel-item active" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer;">
+                  <img class="img-fluid" src="{{ photo.image.url }}" alt="{{ photo.description }}" width="500" height="500">
+                </div>
+                {% endfor %}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+      </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            {% for photo in our_car.image.all %}
+            <div class="modal-body text-center">
+                <img class="img-fluid" src="{{ photo.image.url }}" alt="{{ photo.description }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

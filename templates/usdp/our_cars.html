@@ -1,0 +1,48 @@
+{% extends "usdp/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="album py-5 bg-body-tertiary">
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for our_car in cars %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            {% with first_photo=our_car.image.first %}
+                                {% if first_photo %}
+                                    <a href="{% url 'our_car' title=our_car.title %} ">
+                                        <img class="img-fluid" src="{{ first_photo.image.url }}" alt="{{ first_photo.description }}">
+                                    </a>
+                                {% endif %}
+                            {% endwith %}
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <a href="{% url 'our_car' title=our_car.title %}" style="text-decoration: none; color: inherit;">{{ our_car.title }}</a>
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="{% url 'our_car' title=our_car.title %}">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Деталі</button>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

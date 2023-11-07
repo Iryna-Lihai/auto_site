@@ -1,0 +1,144 @@
+{% extends "usdp/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5 my-5 text-center">
+     <img class="img-fluid" src="{% static 'usdp/images/logo_3.png' %}" alt="car" width="500" height="500">
+    <h1 class="display-5 fw-bold text-body-emphasis">Калькулятор вартості автомобіля</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Ви можете самостійно прорахувати приблизну вартість обраного автомобіля з доставкою в Україну.
+            Для отримання точної вартості звертайтесь до нас.</p>
+    </div>
+</div>
+<div class="container px-4 py-5 ">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img class="img-fluid" src="{% static 'usdp/images/Дизайн без назви-2.png' %}" alt="car" width="500" height="500">
+        </div>
+
+        <div class="col-lg-6">
+            <form action="{% url 'calculator' %}" method="POST" class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
+                {% csrf_token %}
+                {{ calculate_form.as_p}}
+                <div id="copart-fields" class="my-3">
+                    <select class="form-select" aria-label="Місце продажу Copart" name="copart_location">
+                        <option selected disabled>Виберіть місце продажу</option>
+                        {% for location in sales_locations_Copart %}
+                            <option value="{{ location.name }}">{{ location.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div id="iaai-fields" class="my-3">
+                    <select class="form-select" aria-label="Місце продажу IAAI" name="iaai_location">
+                        <option selected disabled>Виберіть місце продажу</option>
+                        {% for location in sales_locations_IAAI %}
+                            <option value="{{ location.name }}">{{ location.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-warning my-2" >
+                    Розрахувати
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script >
+$(document).ready(function() {
+  // Hide copart and iaai fields initially
+  $('#copart-fields').hide();
+  $('#iaai-fields').hide();
+
+  // Show/hide fields based on auction_field selection
+  $('#id_auction_field').change(function() {
+    var selectedAuction = $(this).val();
+    if (selectedAuction == 'IAAI') {
+      $('#copart-fields').hide();
+      $('#iaai-fields').show();
+    } else if (selectedAuction == 'Copart') {
+      $('#iaai-fields').hide();
+      $('#copart-fields').show();
+    }
+  });
+});
+
+</script>
+
+{% endblock %}
+
+<!--<script>-->
+<!--function submitForm() {-->
+<!--    // Отримуємо дані з форми-->
+<!--    var auctionField = document.getElementById('id_auction_field').value;-->
+<!--    var engineField = document.getElementById('id_engine_field').value;-->
+<!--    var auctionPrice = document.getElementById('id_auction_price').value;-->
+<!--    var copartLocation = document.getElementById('copart_location').value;-->
+<!--    var iaaiLocation = document.getElementById('iaai_location').value;-->
+
+<!--    // Викликаємо функцію для відображення результатів у модальному вікні-->
+<!--    displayResults(auctionField, engineField, auctionPrice, copartLocation, iaaiLocation);-->
+<!--}-->
+
+<!--function displayResults(auctionField, engineField, auctionPrice, copartLocation, iaaiLocation) {-->
+<!--    // Тут ви можете зробити будь-які обчислення або маніпуляції з отриманими даними-->
+<!--    // Наприклад, розрахунки відповідно до ваших логічних правил-->
+
+<!--    // Отримані результати можна вивести в модальному вікні або в будь-якому іншому місці на сторінці-->
+<!--    var totalResult = "Auction Field: " + auctionField + "<br>" +-->
+<!--                     "Engine Field: " + engineField + "<br>" +-->
+<!--                     "Auction Price: " + auctionPrice + "<br>" +-->
+<!--                     "Copart Location: " + copartLocation + "<br>" +-->
+<!--                     "IAAI Location: " + iaaiLocation;-->
+
+<!--    // Виводимо результати у модальному вікні-->
+<!--    document.getElementById('resultModalBody').innerHTML = totalResult;-->
+
+<!--    // Відображаємо модальне вікно-->
+<!--    $('#modalCalculate').modal('show');-->
+<!--}-->
+
+<!--</script>-->
+
+
+
+
+
+
+
+<!--<script>-->
+<!--function submitForm() {-->
+<!--    // Отримуємо дані з форми-->
+<!--    var auctionField = document.getElementById('id_auction_field').value;-->
+<!--    var engineField = document.getElementById('id_engine_field').value;-->
+<!--    var auctionPrice = document.getElementById('id_auction_price').value;-->
+<!--    var copartLocation = document.getElementById('copart_location').value;-->
+<!--    var iaaiLocation = document.getElementById('iaai_location').value;-->
+
+<!--    // Викликаємо функцію для відображення результатів у модальному вікні-->
+<!--    displayResults(auctionField, engineField, auctionPrice, copartLocation, iaaiLocation);-->
+<!--}-->
+
+<!--function displayResults(auctionField, engineField, auctionPrice, copartLocation, iaaiLocation) {-->
+<!--    // Тут ви можете зробити будь-які обчислення або маніпуляції з отриманими даними-->
+<!--    // Наприклад, розрахунки відповідно до ваших логічних правил-->
+
+<!--    // Отримані результати можна вивести в модальному вікні або в будь-якому іншому місці на сторінці-->
+<!--    var totalResult = "Auction Field: " + auctionField + "<br>" +-->
+<!--                     "Engine Field: " + engineField + "<br>" +-->
+<!--                     "Auction Price: " + auctionPrice + "<br>" +-->
+<!--                     "Copart Location: " + copartLocation + "<br>" +-->
+<!--                     "IAAI Location: " + iaaiLocation;-->
+
+<!--    // Виводимо результати у модальному вікні-->
+<!--    document.getElementById('resultModalBody').innerHTML = totalResult;-->
+
+<!--    // Відображаємо модальне вікно-->
+<!--    $('#modalCalculate').modal('show');-->
+<!--}-->
+
+<!--</script>-->
+
+

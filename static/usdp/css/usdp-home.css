@@ -1,0 +1,9 @@
+
+body {
+  background-color: darkgrey;
+}
+
+.row.featurette {
+  margin-left: auto;
+  margin-right: auto;
+}
